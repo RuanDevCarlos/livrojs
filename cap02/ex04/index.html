@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h1>Restaurante</h1>
+    </header>
+    <main>
+        <form>
+            <div>
+                Buffet por Quilo R$: <input type="number" id="inQuilo" min="0" step="0.01" required>
+            </div>
+            <div>
+                Consumo do Cliente (gr): <input type="number" id="inConsumo" min="0" required>
+            </div>
+            <input type="submit" value="Calcular Preço">
+        </form>
+        
+        <!-- No código HTML foram adicionados os parâmetros min e step no input:number. Eles servem para indicar o valor mínimo a ser aceito pro esse campo e o valor de incremento ou decremento -->
+
+        <div id="resp"></div>
+
+        <script>
+            // cria referência ao form ao elemento div (onde será exibida a resposta)
+            let formu = document.querySelector('form')
+            let resp = document.querySelector('div#resp')
+
+            // cria um 'ouvinte' de evento, acionado quando o botão submit for clicado
+            formu.addEventListener('submit', (e) => {
+                //obtém dados dos campos
+                let quilo = Number(formu.inQuilo.value) 
+                let consumo = Number(formu.inConsumo.value)
+
+                let valor = (quilo / 1000) * consumo // calcula valor a ser pago
+                resp.innerText = `Valor a pagar R$: ${valor.toFixed(2)}` // exibe a resposta
+
+                e.preventDefault() // evita o envio de formulário 
+            })
+        </script>
+    </main>
+</body>
+</html>

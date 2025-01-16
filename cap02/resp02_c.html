@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h1>Supermercado JS</h1>
+    </header>
+    <main>
+        <form>
+            <label for="inProduto">Produto: </label>
+            <input type="text" name="inProduto" id="inProduto">
+            <br>
+            <label for="inPreco">Preço R$: </label>
+            <input type="number" name="inPreco" id="inPreco">
+            <br>
+            <input type="submit" value="Ver Promoção">
+        </form>
+        <div id="resp01"></div>
+        <div id="resp02"></div>
+    </main>
+    <script>
+        // referências
+        let formu = document.querySelector('form')
+        let resp01 = document.querySelector('div#resp01')
+        let resp02 = document.querySelector('div#resp02')
+
+        // ouvinte
+        formu.addEventListener('submit', (e) => {
+            let produto = formu.inProduto.value
+            let preco = Number(formu.inPreco.value)
+            let descontoUnid = preco / 2
+            let desconto = (preco * 2) + descontoUnid
+
+            resp01.innerText = `${produto} - Promoção: Leve 3 por R$: ${desconto.toFixed(2)}`
+            resp02.innerText = `O 3º produto custa apenas R$: ${descontoUnid.toFixed(2)}`
+
+            e.preventDefault()
+        })
+    </script>
+</body>
+</html>

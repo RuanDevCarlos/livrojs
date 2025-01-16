@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt0br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo 2.2</title>
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+        body {
+            background-color: #D83535;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+        }
+
+        main {
+            font-family: Oswald;
+            font-size: 1.5em;
+            background-color: #FFE954;
+            width: 500px;
+            margin: auto;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        main div {
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cine JS: Filmes em Cartaz</h1>
+    <!-- o parâmetro required no input sugere que o campo é de preenchimento obrigatório -->
+    <main>
+        <form>
+            <div>
+                Título do Filme: <input type="text" id="inTitulo" required>
+            </div>
+            <div>
+                Duração em Minutos: <input type="number" id="inDuracao" required>
+            </div>
+            <input type="submit" value="Converter em Horas e Minutos">
+        </form>
+        <div id="exibir01"></div>
+        <div id="exibir02"></div>
+    </main>
+
+    <script>
+        // cria uma referência ao form a aos elementos div (respostas)
+        let formu = document.querySelector("form")
+        let resp01 = document.querySelector('div#exibir01')
+        let resp02 = document.querySelector('div#exibir02')
+
+        // cria um 'ouvinte' de evento, acionado quando o botão submit for clicado
+        formu.addEventListener('submit', (e) => {
+            // obtem conteúdo dos campos
+            let titulo = formu.inTitulo.value 
+            let duracao = Number(formu.inDuracao.value)
+
+            let horas = Math.floor(duracao / 60) // arredonda para baixo o resultado
+            let minutos = duracao % 60 // obtém o resto da divisão 
+
+            resp01.innerText = titulo
+            resp02.innerText = `${horas} hora(s) e ${minutos} minuto(s)`
+
+            e.preventDefault() // evita o envio do form
+        })
+    </script>
+</body>
+</html>

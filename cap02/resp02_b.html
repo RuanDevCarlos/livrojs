@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h1>Lan House JS</h1>
+    </header>
+    <main>
+        <form>
+           <label for="tempoValor">Valor por 15 minutos de Uso R$: </label>
+           <input type="number" name="tempoValor" id="tempoValor" required>
+            <br>
+           <label for="tempoUso">Tempo de Uso do Cliente (min): </label>
+           <input type="number" name="tempoUso" id="tempoUso" required>
+            <br>
+           <input type="submit" value="Calcular Valor a Pagar">
+        </form>
+        <br>
+        <div id="resp"></div>
+    </main>
+
+    <script>
+        // referências
+        let formu = document.querySelector('form')
+        let resp = document.querySelector('div#resp')
+
+        // ouvinte
+        formu.addEventListener('submit', (e) => {
+            let valor = Number(formu.tempoValor.value)
+            let uso = Number(formu.tempoUso.value)
+            let preco = 0
+            if (uso % 15 == 0) {   
+                preco = uso / 15 * valor
+            } else {
+                preco = uso / 15 * valor + 1
+            }
+
+            resp.innerText = `Valor a Pagar R$: ${preco.toFixed(2)}`
+
+            e.preventDefault()
+        })
+        
+    </script>
+</body>
+</html>
