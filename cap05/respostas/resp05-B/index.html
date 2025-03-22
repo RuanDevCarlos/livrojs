@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resposta B</title>
+    <link rel="stylesheet" href="../estilo/style.css">
+    <link rel="shortcut icon" href="../imagens/livrojs.png" type="image/x-icon">
+</head>
+<body>
+    <img src="../imagens/exerc.jpg" alt="Notebook">
+    <h1>programa Criação de Chinchilias</h1>
+    <form>
+        <div>
+            <label for="inChin">Nº Chinchilias: </label>
+            <input type="number" name="inChin" id="inChin" min="2" required>
+        </div>
+        <div>
+            <label for="inAno">Nº Anos: </label>
+            <input type="number" name="inAno" id="inAno" required>
+        </div>
+        <input type="submit" value="Mostrar Previsão de Chinchilias">
+    </form>
+    <p id="resp"></p>
+
+    <script>
+        const form = document.querySelector('form')
+        let resp = document.querySelector('#resp')
+
+        form.addEventListener('submit', (e) => {
+
+            let chin = Number(form.inChin.value)
+            let ano = Number(form.inAno.value)
+            let cont = 0
+
+            while (cont < ano) {
+                cont++ 
+                resp.innerText += `${cont}º Ano: ${chin} Chinchilias \n`
+                chin = chin * 3
+            }
+
+            e.preventDefault()
+        })
+    </script>
+</body>
+</html>

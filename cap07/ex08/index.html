@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo 8</title>
+    <link rel="stylesheet" href="../estilo/style.css">
+    <link rel="shortcut icon" href="../imagens/livrojs.png" type="image/x-icon">
+</head>
+<body>
+    <img src="../imagens/ex7_8.jpg" alt="Caixa da Loja">
+    <h1>Programa Caixa da Loja</h1>
+    <form>
+        <div> <!-- Campo para inserir a data de vencimento -->
+            <label for="inDataVenci">Data do Vencimento: </label>
+            <input type="date" name="dataVencimento" id="inDataVenci" autofocus required>
+        </div>
+
+        <div> <!-- Campo para inserir o valor da conta -->
+            <label for="inValor">Valor da Conta: </label>
+            <input type="number" name="valor" id="inValor" min="0" step="0.1" class="alinha-direita" required>
+            <input type="submit" value="Calcular Multa e Juros">
+        </div>
+
+        <div> <!-- Campo para exibir o valor da multa (somente leitura) -->
+            <label for="outMulta">Valor da Multa: </label>
+            <input type="number" name="multa" id="outMulta" class="alinha-direita" readonly>
+        </div>
+
+        <div> <!-- Campo para exibir o valor dos juros (somente leitura) -->
+            <label for="outJuros">Valor do Juros: </label>
+            <input type="number" name="juros" id="outJuros" class="alinha-direita" readonly>
+        </div>
+        
+        <div> <!-- Campo para exibir o total a pagar (somente leitura) -->
+            <label for="outTotal">Total a Pagar R$: </label>
+            <input type="number" name="total" id="outTotal" class="alinha-direita" readonly>
+            <input type="reset" value="Nova Conta">
+        </div>
+    </form>
+
+    <script>
+        const formu = document.querySelector('form')
+        
+        // Define as taxas de multa e juros
+        const TAXA_MULTA = 2 / 100
+        const TAXA_JUROS = 0.33 / 100
+
+        formu.addEventListener("submit", (e) => {
+            // Impede o envio padrão do formulário
+            e.preventDefault()
+
+            // Obtém a data de vencimento e o valor da conta
+            const dataVenc = formu.inDataVenci.value
+            const valor = Number(formu.inValor.value)
+
+            // Obtém a data atual e cria um objeto Date para a data de vencimento
+            const hoje = new Date()
+            const vencto = new Date()
+
+            // Divide a data de vencimento em partes (ano, mês, dia)
+            const partes = dataVenc.split("-")
+            vencto.setDate(Number(partes[2]))
+            // Define o mês (subtrai 1 pois os meses começam em 0)
+            vencto.setMonth(Number(partes[1] - 1))
+            vencto.setFullYear(Number(partes[0]))
+
+            // Calcula o atraso em milissegundos
+            const atraso = hoje - vencto
+            let multa = 0
+            let juros = 0
+
+            // Verifica se há atraso
+            if (atraso > 0) {
+                // Converte o atraso de milissegundos para dias
+                const dias = atraso / 86400000
+                // Calcula a multa e os juros
+                multa = valor * TAXA_MULTA
+                juros = valor * TAXA_JUROS * dias
+
+                // Calcula o total a pagar
+                const total = valor + multa + juros
+
+                // Exibe os valores nos campos de saída
+                formu.outMulta.value = multa.toFixed(2)
+                formu.outJuros.value = juros.toFixed(2)
+                formu.outTotal.value = total.toFixed(2)
+            }
+        })
+    </script>
+</body>
+</html>

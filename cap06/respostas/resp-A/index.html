@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resposta A</title>
+    <link rel="stylesheet" href="../estilo/style.css">
+    <link rel="shortcut icon" href="../imagens/livrojs.png" type="image/x-icon">
+</head>
+<body>
+    <img src="../imagens/exerc.jpg" alt="Notebook">
+    <h1>Jogos Eliminatórios</h1>
+    <hr>
+    <form>
+        <div>
+            <label for="inClube">Clube: </label>
+            <input type="text" name="clube" id="inClube" required autofocus>
+            <input type="submit" value="Adicionar">
+        </div>
+        <div>
+            <input type="button" value="Listar Clubes" id="listarClubes">
+            <input type="button" value="Mostrar Tabelas de Jogos" id="tabelaJogos">
+        </div>
+    </form>
+    <span class="resposta" id="resp01"></span>
+
+    <script>
+        // Seleciona o formulário e o elemento de resposta
+        const formu = document.querySelector('form')
+        const resp = document.querySelector('#resp01')
+
+        // Array para armazenar os clubes adicionados
+        clubes = []
+
+        // Adiciona um listener para o evento de submit do formulário
+        formu.addEventListener('submit', (e) => {
+            e.preventDefault()
+
+            // Obtém o valor do campo de entrada do clube
+            const nome = formu.inClube.value
+            
+            // Adiciona o clube ao array
+            clubes.push(nome)
+
+            // Limpa o campo de entrada após adicionar o clube
+            formu.reset()
+
+            // Dispara o evento de clique no botão "Listar Clubes" para atualizar a lista
+            formu.listarClubes.dispatchEvent(new Event('click'))
+        })
+
+        // Adiciona um listener para o botão "Listar Clubes"
+        formu.listarClubes.addEventListener('click', () => {
+            // Verifica se há clubes na lista
+            if (clubes.length == 0) {
+                alert("Não há clubes na lista")
+                return
+            }
+
+            // Cria uma string com a lista de clubes
+            let lista = ""
+            for (const clube of clubes) {
+                lista += `${clube}\n`
+            }
+
+            // Exibe a lista de clubes na área de resposta
+            resp.innerText = lista
+        })
+
+        // Adiciona um listener para o botão "Mostrar Tabela de Jogos"
+        formu.tabelaJogos.addEventListener('click', () => {
+            // Verifica se o número de clubes é par
+            if (clubes.length % 2 !== 0) {
+                alert("É preciso um número par para mostrar a tabela de clubes!")
+                return
+            }
+            
+            // Armazena o número que representa metade do array
+            const half = clubes.length / 2
+
+            // Cria uma cópia reversa do array de clubes
+            const clubesR = [...clubes]
+            clubesR.reverse()
+
+            // Cria a tabela de jogos
+            lista = ""
+            for (let i = 0; i < half; i++) {
+                lista += `${clubes[i]} X ${clubesR[i]}\n`
+            }
+
+            // Exibe a tabela de jogos na área de resposta
+            resp.innerText = lista
+        })
+    </script>
+</body>
+</html>

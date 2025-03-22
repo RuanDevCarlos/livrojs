@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo 7.2</title>
+    <link rel="stylesheet" href="../estilo/style.css">
+    <link rel="shortcut icon" href="../imagens/livrojs.png" type="image/x-icon">
+</head>
+<body>
+    <img src="../imagens/ex7_2.jpg" alt="Frutas">
+    <h1>Programa Qual é a Fruta?</h1>
+    <form>
+        <div>
+            <label for="inFruta">Fruta: </label>
+            <input type="text" name="furta" id="inFruta" autofocus required>
+            <input type="submit" value="Jogar">
+        </div>
+    </form>
+    <p>Descubra: <span class="entre-letras"></span></p>
+
+    <script>    
+        const formu = document.querySelector('form')
+        const resp = document.querySelector('span')
+        
+        // "escuta" evento submit do form
+        formu.addEventListener('submit', (e) => {
+            // evita envio do form
+            e.preventDefault()
+
+            // conteúdo do campo em maiúsculas
+            const fruta = formu.inFruta.value.toUpperCase()
+            
+            // string que irá conter a resposta
+            let resposta = ""                                
+
+            //percorre todos os caracteres da fruta
+            for (const letra of fruta) {
+                // se letra for igual a letra inicial da string, adiciona a letra inicial
+                if (letra == fruta.charAt(0)) {
+                    resposta += fruta.charAt(0)
+                } else {
+                // senão. adciona o sublinhado
+                    resposta += '_'
+                }
+            }
+
+            resp.innerText = resposta
+            formu.inFruta.value = "*".repeat.length 
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo 6.1</title>
+    <link rel="stylesheet" href="../estilo/style.css">
+    <link rel="shortcut icon" href="../imagens/livrojs.png" type="image/x-icon">
+</head>
+<body>
+    <img src="../imagens/ex6_1.jpg" alt="Consultório Odontológico" class="alta">
+    <h1>Consultório</h1>
+    <form>
+        <div>
+            <label for="inPaciente">Paciente: </label>
+            <input type="text" id="inPaciente" required autofocus>
+            <input type="submit" value="Adicionar">
+            <input type="button" value="Urgência" id="btUrgencia">
+            <input type="button" value="Atender" id="btAtender">
+        </div>
+    </form>
+    <p> Em atendimento:
+        <span class="fonte-azul"></span>
+    </p>
+    <pre></pre>
+    <script>
+        const formu = document.querySelector('form')
+        const respNome = document.querySelector('span')
+        const respLista = document.querySelector('pre')
+        const pacientes = []
+
+        formu.addEventListener('submit', (e) => {
+            const nome = formu.inPaciente.value
+            // Adiciona o nome do paciente ao final do array
+            pacientes.push(nome)
+            let lista = ""
+            
+            // Loop para criar a lista de pacientes formatada
+            for (let i = 0; i < pacientes.length; i++) {
+                lista += `${i + 1}. ${pacientes[i]}\n`
+            }
+
+            respLista.innerText = lista
+            formu.inPaciente.value = ""
+            formu.inPaciente.focus()
+
+            // Impede o comportamento padrão de recarregar a página ao enviar o formulário
+            e.preventDefault()
+        })
+
+        formu.btUrgencia.addEventListener('click', () => {
+            if (!formu.checkValidity()) {
+                alert('Informe o nome do paciente a ser atendido em caráter de urgência')
+                formu.inPaciente.focus()
+                return
+            }
+
+            const nome = formu.inPaciente.value
+            // Adiciona o nome do paciente no início do array (urgência
+            pacientes.unshift(nome)
+            let lista = ""
+            // Cria a lista de pacientes formatada
+            pacientes.forEach((paciente, i) => (lista += `${i + 1}. ${paciente}\n`))
+            
+            respLista.innerText = lista
+            formu.inPaciente.value = ""
+            formu.inPaciente.focus()
+        })
+
+        formu.btAtender.addEventListener('click', () => {
+            if (pacientes.length == 0) {
+                alert('Não há pacientes na lista de espera')
+                formu.inPaciente.focus()
+                return
+            }
+
+            // Remove o primeiro paciente da lista e armazena seu nome
+            const atender = pacientes.shift()
+            respNome.innerText = atender
+            let lista = ""
+            pacientes.forEach((paciente, i) => (lista += `${i + 1}. ${paciente}\n`))
+            respLista.innerText = lista
+        })
+    </script>
+</body>
+</html>

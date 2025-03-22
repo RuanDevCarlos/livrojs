@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo 7.6</title>
+    <link rel="stylesheet" href="../estilo/style.css">
+    <link rel="shortcut icon" href="../imagens/livrojs.png" type="image/x-icon">
+</head>
+<body>
+    <img src="../imagens/ex7_6.jpg" alt="Senha">
+    <h1>Programa Valida Senha</h1>
+    <form>
+        <div>
+            <label for="inSenha">Senha: </label>
+            <input type="text" name="senha" id="inSenha">
+            <input type="submit" value="Verificar Validade">
+        </div>
+    </form>
+    <p class="resp"></p>
+
+    <script>
+         // Seleciona o formulário e o parágrafo de resposta
+        const formu = document.querySelector('form')
+        const resp = document.querySelector('p')
+
+        // Adiciona um listener para o evento de submit do formulário
+        formu.addEventListener('submit', (e) => {
+            // Impede o envio padrão do formulário (recarregar a página)
+            e.preventDefault()
+
+            // Obtém o valor da senha digitada pelo usuário
+            const senha = formu.inSenha.value
+
+            // Array para armazenar os erros de validação
+            const erros = []
+
+            // Verifica se a senha tem entre 8 e 15 caracteres
+            if (senha.length < 8 || senha.length > 15) {
+                erros.push('Possuir entre 8 e 15 caracteres')
+            }
+
+            // Verifica se a senha contém pelo menos um número
+            if (senha.match(/[0-9]/g) == null) {
+                erros.push("Posuir números (no mínimo, 1)")
+            }
+
+            // Verifica se a senha contém pelo menos uma letra minúscula
+            if (!senha.match(/[a-z]/g)) {
+                erros.push("Possuir letras minúsculas (no mínimo, 1)")
+            }
+
+            // Verifica se a senha contém pelo menos uma letra maiúscula
+            if (!senha.match(/[A-Z]/g)) {
+                erros.push("Possuir letras maiúsculas (no mínimo, 1)")
+            }
+
+            // Verifica se a senha contém pelo menos um símbolo (caractere especial)
+            if (!senha.match(/[\W|_]/)) {
+                erros.push("Possuit símbolos (no mínimo, 1)")
+            }
+
+            // Se não houver erros, a senha é válida
+            if (erros.length == 0) {
+                resp.innerText = "OK! Senha Válida"
+            } else {
+                resp.innerText = `Erro.. A senha deve ${erros.join(", ")}`
+            }
+        })
+    </script>
+</body>
+</html>

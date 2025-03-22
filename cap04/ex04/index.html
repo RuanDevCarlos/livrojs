@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo 4.4</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="imagens/livrojs.png" type="image/x-icon">
+</head>
+<body>
+    <img src="imagens/ex4_4.jpg" alt="Globo Terrestre">
+    <h1>Programa Fuso Horário</h1>
+    <form>
+        <div>
+            <label for="inHoraBrasil">Hora no Brasil (h.m)</label>
+            <input type="number" name="inHoraBrasil" id="inHoraBrasil" min="0" max="23.59" step="0.01" required>
+        </div>
+        <input type="submit" value="Exibir a Hora na França">
+    </form>
+    <p id="resp"></p>
+    <script src="script.js"></script>
+</body>
+</html>

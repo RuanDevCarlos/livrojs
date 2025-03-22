@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Programa Situação do Aluno</h1>
+    </header>
+    <main>
+        <form id="formu">
+            <div>
+                <label for="inNome">Nome do Aluno: </label>
+                <input type="text" name="inNome" id="inNome" required>
+            </div>
+
+            <div>
+                <label for="inNota01">1º Nota: </label>
+                <input type="number" name="inNota01" id="inNota01" step="0.1" min="0" max="10" required>
+            </div>
+
+            <div>
+                <label for="inNota02">2º Nota: </label>
+                <input type="number" name="inNota02" id="inNota02" step="0.1" min="0" max="10" required>
+            </div>
+            <input type="submit" value="Exibir Média e Situação">
+        </form>
+        <div>
+            <p id="resp01"></p>
+            <p id="resp02"></p>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>

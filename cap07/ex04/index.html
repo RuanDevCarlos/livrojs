@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo 7.4</title>
+    <link rel="stylesheet" href="../estilo/style.css">
+    <link rel="stylesheet" href="../imagens/livrojs.png">
+</head>
+<body>
+    <img src="../imagens/ex7_4.jpg" alt="E-mail">
+    <h1>programa Nome no Crachá</h1>
+    <form>
+        <div>
+            <label for="inNome">Nome do Participante: </label>
+            <input type="text" name="nome" id="inNome" autofocus required>
+            <input type="submit" value="Gerar Crachá">
+        </div>
+    </form>
+    <p class="resp"></p>
+
+    <script>
+        // Seleciona o formulário e o parágrafo de resposta
+        const formu = document.querySelector('form')
+        const resp = document.querySelector('p')
+
+        // Adiciona um listener para o evento de submit do formulário
+        formu.addEventListener('submit', (e) => {
+            // Impede o comportamento padrão de recarregar a página
+            e.preventDefault()
+
+            // Obtém o valor do campo de nome e remove espaços em branco no início e no fim
+            const nome = formu.inNome.value.trim()
+
+            // Verifica se o nome contém um espaço (ou seja, se é um nome completo)
+            if (!nome.includes(" ")) {
+                alert("Informe o nome completo...")
+                return
+            }
+
+            // Encontra o índice do primeiro e do último espaço no nome
+            const priEspaco = nome.indexOf(" ")
+            const ultEspaco = nome.lastIndexOf(" ")
+
+            // Gera o crachá: pega o primeiro nome e o último sobrenome
+            const cracha = nome.substr(0, priEspaco) + nome.substr(ultEspaco)
+
+            resp.innerText = `Crachá: ${cracha}`
+        })
+    </script>
+</body>
+</html>

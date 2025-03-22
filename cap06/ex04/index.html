@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo 6.4</title>
+    <link rel="stylesheet" href="../estilo/style.css">
+    <link rel="shortcut icon" href="../imagens/livrojs.png" type="image/x-icon">
+</head>
+<body>
+    <img src="../imagens/ex6_4.jpg" alt="Brinquedoteca" class="alta">
+    <h1>Programa Brinquedoteca</h1>
+    <form>
+        <div class="campoForm">
+            <label for="inNome">Nome da Criança: </label>
+            <input type="text" name="nome" id="inNome" required autofocus>
+        </div>
+        <div class="campoForm">
+            <label for="inIdade">Idade: </label>
+            <input type="number" name="idade" id="inIdade" min="0" required>
+            <input type="submit" value="Adicionar">
+        </div>
+        <div class="campoForm">
+            <input type="button" value="Listar Todos" id="botaoListar">
+            <input type="button" value="Resumir por Idade" id="botaoResumir">
+        </div>
+    </form>
+    <pre></pre>
+    <script>
+        // Seleciona o formulário e o elemento <pre> para exibir os resultados
+        const formu = document.querySelector('form')
+        const resp = document.querySelector('pre')
+
+        // Array para armazenar as crianças cadastradas
+        const criancas = []
+
+        // Evento de submit do formulário (adicionar uma criança)
+        formu.addEventListener("submit", (e) => {
+            e.preventDefault()
+
+            // Obtém o nome e a idade da criança
+            const nome = formu.inNome.value
+            const idade = Number(formu.inIdade.value)
+            
+            // Adiciona a criança ao array de crianças
+            criancas.push({nome, idade})
+
+            // Limpa o formulário e retorna o foco para o campo de nome
+            formu.reset()
+            formu.inNome.focus()
+
+            // Dispara o evento de clique no botão "Listar Todos" para atualizar a lista
+            formu.botaoListar.dispatchEvent(new Event("click"))
+        })
+
+        // Evento de clique no botão "Listar Todos"
+        formu.botaoListar.addEventListener("click", () => {
+            
+            // Verifica se há crianças cadastradas
+            if (criancas.length == 0) {
+                alert("Não há crinças na lista")
+                return
+            }
+            // Cria uma lista formatada com todas as crianças
+            let lista = ""
+            for (const crianca of criancas) {
+                const {nome, idade} = crianca
+                lista += `${nome} - ${idade} anos\n`
+            }
+
+            // Exibe a lista no elemento <pre>
+            resp.innerText = lista
+        })
+
+        // Evento de clique no botão "Resumir por Idade"
+        formu.botaoResumir.addEventListener("click", () => {
+
+            // Verifica se há crianças cadastradas
+            if (criancas.lenght == 0) {
+                alert("Não há crinças na lista")
+                return
+            }
+
+            // Cria uma cópia do array de crianças e ordena por idade
+            const copia = [...criancas]
+            copia.sort((a, b) => a.idade - b.idade)
+
+            // Variáveis para construir o resumo
+            let resumo = ""
+            let aux = copia[0].idade
+            let nomes = []
+
+            // Itera sobre a lista ordenada
+            for (const crianca of copia) {
+                const {nome, idade} = crianca
+
+                // Se a idade for a mesma, adiciona o nome ao array
+                if (idade == aux) {
+                    nomes.push(nome)
+                }
+                else {
+                    // Se a idade mudar, adiciona o resumo da idade anterior ao texto
+                    resumo += `${aux} ano(s): ${nomes.length} criança(s) -`
+                    resumo += ((nomes.length / copia.length) * 100).toFixed(2) + "%\n"
+                    resumo += "(" + nomes.join(", ") + ")\n\n"
+
+                    // Atualiza a idade atual e reinicia o array de nomes
+                    aux = idade
+                    nomes = []
+                    nomes.push(nome)
+                }
+            }
+            
+            // Adiciona o resumo da última idade ao texto
+            resumo += `${aux} anos(s): ${nomes.length} criança(s) - `
+            resumo += `${((nomes.length / copia.length) * 100).toFixed(2)}%\n`
+            resumo += `(${nomes.join(", ")})\n\n`
+
+            // Exibe o resumo no elemento <pre>
+            resp.innerText = resumo
+        })
+    </script>
+</body>
+</html>

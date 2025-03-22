@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resposta C</title>
+    <link rel="stylesheet" href="../estilo/style.css">
+    <link rel="shortcut icon" href="../imagens/livrojs.png" type="image/x-icon">
+</head>
+<body>
+    <img src="../imagens/exerc.jpg" alt="Notebook">
+    <h1>Programa Números Perfeitos</h1>
+    <form>
+        <div>
+            <label for="inNum">Número: </label>
+            <input type="number" name="inNum" id="inNum">
+        </div>
+        <input type="submit" value="Verificar se é Perfeito">
+    </form>
+    <p id="resp01"></p>
+    <p id="resp02"></p>
+    <script>
+        const form = document.querySelector('form')
+        let resp01 = document.querySelector('#resp01')
+        let resp02 = document.querySelector('#resp02')
+
+        form.addEventListener('submit', (e) => {
+            let num = Number(form.inNum.value)
+            let somaDiv = 0
+            let divisores = ""
+
+            resp01.innerText = ""
+            resp02.innerText = ""
+
+            for (let i = 1; i < num; i++) {
+                if (num % i == 0) {
+                    somaDiv += i
+                    divisores += ` ${i},`
+                }
+            }
+
+            if (somaDiv == num) {
+                resp01.innerText = `Divisores de ${num}: ${divisores} (Soma = ${num}) \n`
+                resp02.innerText = `${num} é um número perfeito`
+            } else {
+                resp01.innerText = `${num} não é um número perfeito`
+            }
+            e.preventDefault()
+        })
+    </script>
+</body>
+</html>

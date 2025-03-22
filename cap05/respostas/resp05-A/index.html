@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resposta A</title>
+    <link rel="stylesheet" href="../estilo/style.css">
+    <link rel="shortcut icon" href="../imagens/livrojs.png" type="image/x-icon">
+</head>
+<body>
+    <img src="../imagens/exerc.jpg" alt="Notebook">
+    <h1>Programa Repete Fruta</h1>
+    <hr>
+    <form>
+        <div>
+            <label for="inFruta">Fruta: </label>
+            <input type="text" name="innFruta" id="inFruta" required>
+        </div>
+        <div>
+            <label for="inNum">Número: </label>
+            <input type="number" name="inNum" id="inNum" required>
+        </div>
+        <input type="submit" value="Repetir Fruta">
+    </form>
+    <p id="resp"></p>
+
+    <script>
+        const form = document.querySelector('form')
+        let resp = document.querySelector('#resp')
+
+        form.addEventListener('submit', (e) => {
+
+            e.preventDefault()
+
+            const frutas = form.inFruta.value
+            let num = Number(form.inNum.value) 
+
+            for (let i = 0; i < num; i++) {
+                resp.innerText += ` ${frutas} `
+                if (i + 1 < num) {
+                    resp.innerText += "*"
+                }
+            }
+        })
+    </script>
+</body>
+</html>

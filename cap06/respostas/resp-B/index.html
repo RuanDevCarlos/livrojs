@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resposta B</title>
+    <link rel="stylesheet" href="../estilo/style.css">
+    <link rel="shortcut icon" href="../imagens/livrojs.png" type="image/x-icon">
+</head>
+<body>
+    <img src="../imagens/exerc.jpg" alt="Notebook">
+    <h1>Programa Números em Ordem</h1>
+    <hr>
+    <form>
+        <div>
+            <label for="inNum">Número: </label>
+            <input type="number" name="numero" id="inNum" min="1" required autofocus>
+            <input type="submit" value="Adicionar">
+        </div>
+        <input type="button" value="Verificar Ordem" id="botaoVerificar">
+    </form>
+    <span class="resposta" id="resp01"></span>
+    <span class="resposta" id="resp02"></span>
+
+    <script>
+        // Seleciona o formulário e os elementos de resposta
+        const formu = document.querySelector('form')
+        const resp01 = document.querySelector('#resp01')
+        const resp02 = document.querySelector('#resp02')
+
+        // Array para armazenar os números adicionados
+        const numeros = []
+
+        // Adiciona um listener para o evento de submit do formulário
+        formu.addEventListener('submit', (e) => {
+            // Impede o comportamento padrão de recarregar a página
+            e.preventDefault()
+
+            // Obtém o valor do campo de entrada do número
+            const num = Number(formu.inNum.value)
+
+            // Verifica se o número já foi adicionado
+            if (numeros.indexOf(num) == -1) {
+                // Adiciona o número ao array se não estiver presente
+                numeros.push(num)
+            } else {
+                // Exibe um alerta se o número já foi adicionado
+                alert("Esse número já foi adicionado, tente outro")
+            }
+
+            // Limpa o campo de entrada após adicionar o número
+            formu.reset()
+            // Exibe a lista de números na área de resposta
+            resp01.innerText = `Números: ${numeros.join(', ')}\n`
+        })
+
+        // Adiciona um listener para o botão "Verificar Ordem"
+        formu.botaoVerificar.addEventListener('click', () => {
+            // Limpa a área de resposta da verificação
+            resp02.innerText = ""
+            
+            // Cria uma cópia do array de números
+            const copia = [...numeros] 
+
+            // Verifica se os números estão em ordem crescente
+            for (let i = 0; i < numeros.length; i++) {
+                // Compara o elemento atual com o próximo
+                if (copia[i] > numeros[i + 1]) {
+                    // Se o elemento atual for maior que o próximo, exibe uma mensagem de alerta
+                    resp02.innerText = "Atenção... Os números não estão em ordem crescente"
+                    break
+                } else {
+                    // Se todos os elementos estiverem em ordem, exibe uma mensagem positiva
+                    resp02.innerText = "Os números estão em ordem crescente"
+                }
+            } 
+            
+            /*
+            const estaEmOrdemCrescente = numeros.every((valor, indice, array) => {
+            if (indice === array.length - 1) return true;
+            return valor <= array[indice + 1];
+            });
+
+            resp02.innerText = estaEmOrdemCrescente ? "Os números estão em ordem crescente" : "Atenção... Os números não estão em ordem crescente";
+            */
+        })
+    </script>
+</body>
+</html>

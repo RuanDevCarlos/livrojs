@@ -1,0 +1,28 @@
+img {
+    float: left;
+    height: 300px;
+    width: 300px;
+}
+
+h1 {
+    border-bottom-style: inset;
+}
+
+.entre-letras {
+    letter-spacing: 0.5em;
+}
+
+.alinha-direita {
+    text-align: right;
+}
+
+form div {
+    margin: 5px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.resp {
+    font-family: monospace;
+    font-size: 1.3em;
+    font-weight: bold;
+}

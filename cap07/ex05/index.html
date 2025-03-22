@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programa E-mail Institucional</title>
+    <link rel="stylesheet" href="../estilo/style.css">
+    <link rel="shortcut icon" href="../imagens/livrojs.png" type="image/x-icon">
+</head>
+<body>
+    <img src="../imagens/ex7_5.jpg" alt="E-mail">
+    <h1>Programa E-mail Institucional</h1>
+    <form>
+        <div>
+            <label for="inFunci">Funcionário: </label>
+            <input type="text" name="funcionario" id="inFunci" autofocus required>
+            <input type="submit" value="Gerar E-mail">
+        </div>
+    </form>
+    <p class="resp"></p>
+
+    <script>
+        // Seleciona o formulário e o parágrafo de resposta
+        const formu = document.querySelector('form')
+        const resp = document.querySelector('p')
+
+        // Adiciona um listener para o evento de submit do formulário
+        formu.addEventListener('submit', (e) => {
+            // Impede o comportamento padrão de recarregar a página
+            e.preventDefault()
+
+            // Obtém o valor do campo de nome do funcionário
+            const funcionario = formu.inFunci.value
+
+            // Divide o nome do funcionário em partes (palavras) usando o espaço como separador
+            const partes = funcionario.split(" ")
+            let email = ""
+            const tam = partes.length
+
+            // Loop para pegar a primeira letra de cada parte, exceto a última
+            for (let i = 0; i < tam - 1; i++) {
+                email += partes[i].charAt(0)
+            }
+
+            // Adiciona a última parte do nome (sobrenome) e o domínio da empresa ao e-mail
+            email += partes[tam - 1] + "@empresa.com.br"
+
+            // Exibe o e-mail gerado no parágrafo de resposta, convertido para minúsculas
+            resp.innerText = `E-mail: ${email.toLowerCase()}`
+        })
+    </script>
+</body>
+</html>

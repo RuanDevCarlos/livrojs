@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resposta C</title>
+    <link rel="stylesheet" href="../estilo/style.css">
+    <link rel="shortcut icon" href="../imagens/livrojs.png" type="image/x-icon">
+</head>
+<body>
+    <img src="../imagens/exerc.jpg" alt="Notebook">
+    <h1>Programa Concurso</h1>
+    <hr>
+    <form>
+        <div>
+            <label for="inCand">Candidato: </label>
+            <input type="text" name="candidato" id="inCand" required>
+        </div>
+        <div>
+            <label for="inAcertos">Nº Acertos: </label>
+            <input type="number" name="acertos" id="inAcertos" required>
+            <input type="submit" value="Adicionar">
+        </div>
+        <div>
+            <input type="button" value="Listar Todos" id="allList">
+            <input type="button" value="Aprovados 2º Etapa" id="aprovados">
+        </div>
+    </form>
+    <span class="resposta" id="resp01"></span>
+
+    <script>
+        // Seleciona o formulário e o elemento onde a resposta será exibida
+        const formu = document.querySelector('form')
+        const resp = document.querySelector('#resp01')
+
+        // Array para armazenar os candidatos
+        const candidatos = []
+
+        // Adiciona um evento de submit ao formulário
+        formu.addEventListener('submit', (e) => {
+            // Impede o envio padrão do formulário
+            e.preventDefault()
+
+            // Obtém os valores dos campos de entrada
+            const nome = formu.inCand.value
+            const acertos = Number(formu.inAcertos.value)
+
+            // Adiciona o candidato ao array de candidatos
+            candidatos.push({nome, acertos})
+
+            // Dispara o evento de clique no botão "Listar Todos" para atualizar a lista
+            formu.allList.dispatchEvent(new Event('click'))
+        })
+
+        formu.allList.addEventListener('click', () => {
+            // Verifica se há candidatos no array
+            if (candidatos.length == 0) {
+                alert('Não há canditados a serem listados')
+                return
+            }
+
+            // Cria uma lista de candidatos
+            let lista = ""
+            for (const candidato of candidatos) {
+                lista += `${candidato.nome} - ${candidato.acertos} acertos\n`
+            }
+
+            // Exibe a lista na área de resposta
+            resp.innerText = ""
+            resp.innerText = lista
+            
+        })
+
+        // Adiciona um evento de clique ao botão "Aprovados 2º Etapa"
+        formu.aprovados.addEventListener('click', () => {
+            // Solicita ao usuário o número mínimo de acertos para aprovação
+            const aprovacao = Number(prompt("Número de acertos para aprovação: "))
+
+            // Filtra os candidatos aprovados
+            const aprovados = candidatos.filter((cand) => cand.acertos >= aprovacao)
+
+            // Verifica se há candidatos aprovados
+            if (aprovados.length == 0) {
+                alert("Não há candidatos aprovados!")
+                resp.innerText = ""
+                return
+            }
+            
+            // Cria uma lista de candidatos aprovados
+            let lista = ""
+            for (const aprovado of aprovados) {
+                lista += `${aprovado.nome} - ${aprovado.acertos} acertos\n`
+            }
+
+            // Exibe a lista de aprovados na área de resposta
+            resp.innerText = ""
+            resp.innerText = lista
+        })
+    </script>
+</body>
+</html>
