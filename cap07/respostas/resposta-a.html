@@ -17,20 +17,65 @@
             <input type="text" name="mensagem" id="inMsg" required>
         </div>
         <div>
-            <input type="button" value="Criptografar">
-            <input type="button" value="Descriptografar">
+            <input type="button" value="Criptografar" id="cripto">
+            <input type="button" value="Descriptografar" id="descript">
         </div>
     </form>
     <p></p>
     
     <script>
+         // Seleciona o formulário e o parágrafo de resposta
         const formu = document.querySelector('form')
         const resp = document.querySelector("p")
 
-        formu.addEventListener("click", () => {
+        // Adiciona evento de clique no botão Criptografar
+        formu.cripto.addEventListener("click", () => {
             resp.textContent = ""
 
+            const cript = []
+            const palavras = formu.inMsg.value // Obtém a mensagem do input
+            const letras = palavras.split("") // Divide a mensagem em array de letras
+            const tam = palavras.length // Obtém o tamanho da mensagem
             
+             // Primeiro loop: pega as letras nas posições ímpares (índices 1, 3, 5...)
+            for (let i = 1; i < tam; i += 2) {
+                cript.push(letras[i])
+            }
+                   
+            // Segundo loop: pega as letras nas posições pares (índices 0, 2, 4...)
+            for (let i = 0; i < tam; i += 2) {
+                cript.push(letras[i])
+            }
+
+            resp.textContent = cript.join("")
+        })
+
+        formu.descript.addEventListener("click", () => {
+            resp.textContent = ""
+
+            const descript = []
+            const palavras = formu.inMsg.value
+            const letras = palavras.split("")
+
+            // Calcula o ponto médio da mensagem criptografada
+            const meio = Math.floor(letras.length / 2)
+            
+            // Divide a mensagem em duas partes:
+            const pares = letras.slice(0, meio)
+            const impares = letras.slice(meio)
+
+            // Recombina as duas metades alternando entre elas
+            for (let i = 0; i < Math.max(pares.length, impares.length); i++) {
+                if (impares[i] !== undefined) {
+                    descript.push(impares[i])
+                }
+
+                if (pares[i] !== undefined) {
+                    descript.push(pares[i])
+                }
+            }
+
+            resp.textContent = descript.join("")
         })
     </script>
 </body>
