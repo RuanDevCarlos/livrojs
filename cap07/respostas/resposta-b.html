@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resposta B</title>
+    <link rel="stylesheet" href="estilo/style.css">
+    <link rel="shortcut icon" href="imagens/livrojs.png" type="image/x-icon">
+</head>
+<body>
+    <img src="imagens/exerc.jpg" alt="ilustração de um notebook">
+    <h1>Frase Palíndromo</h1>
+    <hr>
+    <form>
+        <div>
+            <label for="inFrase">Frase:</label>
+            <input type="text" name="frase" id="inFrase" required>
+            <input type="button" value="Verificar se é Palíndromo" id="btVerificar">
+        </div>
+    </form>
+    <p></p>
+    
+    <script>
+        const formu = document.querySelector('form')
+        const resp = document.querySelector('p')
+        
+        formu.btVerificar.addEventListener('click', () => {
+            // Obtém o valor do campo de entrada e converte para maiúsculas
+            const frase = formu.inFrase.value.toUpperCase()
+
+            // Remove todos os espaços da frase
+            const semEspaco = frase.replace(/\s/g,'')
+
+            // Armazena o número de letras sem os espaços
+            const numLetras = semEspaco.length
+
+            // variável para validar a frase é um palindromo
+            let palindromo = true
+
+            // limpa o campo de resposta
+            resp.textContent = ""
+            
+            // Loop para verificar se uma letra é igual a letra no posição oposta a sua
+            for (let i = 0; i < numLetras / 2; i++) {
+                if (semEspaco.charAt(i) !== semEspaco.charAt(numLetras - i - 1)) {
+                    palindromo = false
+                    break
+                }
+            }
+            
+            // Altera a resposta conforme a validação
+            if (palindromo == true) {
+                resp.textContent = `${frase} é um Palíndromo`
+            } else {
+                resp.textContent = `${frase} não é um Palíndromo`
+            }
+        })
+        
+    </script>
+</body>
+</html>
