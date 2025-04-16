@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resposta C</title>
+    <link rel="stylesheet" href="estilo/style.css">
+    <link rel="shortcut icon" href="imagens/livrojs.png" type="image/x-icon">
+</head>
+<body>
+    <img src="imagens/exerc.jpg" alt="ilustração de um notebook">
+    <h1>Multa de Trânsito</h1>
+    <hr>
+    <form>
+        <div>
+            <label for="inData">Data da Inflação:</label>
+            <input type="date" name="data" id="inData" require>
+        </div>
+        <div>
+            <label for="inMulta">Valor da Multa R$:</label>
+            <input type="number" name="multa" id="inMulta" min="0.01" required>
+        </div>
+        <input type="button" value="Calcular Data Limite e Valor com Desconto" id="btCalc">
+    </form>
+    <p id="resposta01"></p>
+    <p id="resposta02"></p>
+    
+    <script>
+        const formu = document.querySelector('form')
+        const resp01 = document.querySelector('#resposta01')
+        const resp02 = document.querySelector('#resposta02')
+
+        formu.btCalc.addEventListener("click", () => {
+            const inflacao = formu.inData.value
+            let multa = Number(formu.inMulta.value)
+
+            const limite = new Date(inflacao)
+            limite.setDate(limite.getDate() + 90)
+            const hoje = new Date()
+
+            const hojeBR = hoje.toLocaleString('pt-BR', {dateStyle: 'short'})
+            const limiteBR = limite.toLocaleString('pt-BR', {dateStyle: 'short'})
+
+            if (hojeBR < limiteBR) {
+                multa = multa * 0.8
+            }
+
+            resp01.textContent = ""
+            resp02.textContent = ""
+
+            resp01.textContent = `Data Limite para Pagamento com Desconto: ${limiteBR}`
+            resp02.textContent = `Valor com desconto R$:${multa}`
+        })
+    </script>
+</body>
+</html>
