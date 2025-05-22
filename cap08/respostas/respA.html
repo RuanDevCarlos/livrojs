@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resposta A</title>
+    <link rel="shortcut icon" href="../imagens/livrojs.png" type="image/x-icon">
+    <style>
+        img {
+            float: left;
+            width: 300px;
+        }
+
+        h1 {
+            margin: 0px;
+        }
+
+        form > div {
+            margin: 5px;
+        }
+
+        pre {
+            font-size: 1.5em;
+
+        }
+    </style>
+</head>
+<body>
+    <img src="../imagens/exerc.jpg" alt="exercicio">
+    <h1>Clube de Natação</h1>
+    <hr>
+    <form>
+        <div>
+            <label for="inNome">Nome do Atleta: </label>
+            <input type="text" id="inNome" required>
+        </div>
+        <div>
+            <label for="inAge">Idade: </label>
+            <input type="number" id="inAge" required>
+        </div>
+        <input type="submit" value="Categorizar Atleta">
+    </form>
+    <pre id="resp01"></pre>
+    <pre id="resp02"></pre>
+    <pre id="resp03"></pre>
+
+    <script>
+        // Seleciona elementos do DOM
+        const formu = document.querySelector("form")
+        const resp01 = document.querySelector("#resp01")
+        const resp02 = document.querySelector("#resp02")
+        const resp03 = document.querySelector("#resp03")
+
+        // Adiciona listener para o evento de submit do formulário
+        formu.addEventListener("submit", (e) => {
+            e.preventDefault()
+            
+            retornarTracos()
+            categorizarAluno()
+        })
+
+        /*
+           Função que cria uma linha de traços correspondente ao nome
+           Substitui cada letra por '-' e mantém os espaços
+         */
+        function retornarTracos() {
+            const nome = formu.inNome.value
+            const letras = []
+
+            // Percorre cada caractere do nome
+            for (let i = 0; i < nome.length; i++) {
+                if (nome.charAt(i) !== " ") {
+                    letras.push("-") // Adiciona traço para letras
+                } else {
+                    letras.push(" ") // Mantém espaço quando encontrado
+                }
+            }
+
+            resp01.textContent = ""
+            resp01.textContent = `${nome}`
+            resp02.textContent = `${letras.join("")}`
+        }
+
+        /*
+            Função que determina a categoria do atleta baseado na idade
+         */
+        function categorizarAluno() {
+            const idade = Number(formu.inAge.value)
+            let categoria
+
+            // Lógica de determinação da categoria
+            if (idade <= 12) {
+                categoria = "Infantil"
+            } else if (idade <= 18) {
+                categoria = "Juvenil"
+            } else {
+                categoria = "Adulto"
+            }
+
+            resp03.textContent = `Categoria: ${categoria}`
+        }
+    </script>
+</body>
+</html>

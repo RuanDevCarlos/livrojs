@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo 8.2</title>
+    <link rel="shortcut icon" href="../imagens/livrojs.png" type="image/x-icon">
+    <link rel="stylesheet" href="../estilo/style.css">
+</head>
+
+<body>
+    <img src="../imagens/ex8_2.jpg" alt="Em 10x" class="normal">
+    <h1>Revenda Avenida - Promoção</h1>
+    <form>
+        <div>
+            <label for="inModelo">Modelo do Veículo: </label>
+            <input type="text" id="inModelo" required autofocus>
+        </div>
+        <div>
+            <label for="inAno">Ano de Fabricação: </label>
+            <input type="number" id="inAno" required>
+        </div>
+        <div>
+            <label for="inPreco">Preço R$: </label>
+            <input type="number" id="inPreco" min="0" step="0.01" required>
+        </div>
+        <input type="submit" value="Classificar - Calcular Entrada e Parcelas">
+    </form>
+
+    <div id="outResp01"></div>
+    <div id="outResp02"></div>
+    <div id="outResp03"></div>
+
+    <script>
+        // Obtém referências aos elementos do formulário e das respostas
+        const formu = document.querySelector('form')
+        const resp01 = document.querySelector('#outResp01')
+        const resp02 = document.querySelector('#outResp02')
+        const resp03 = document.querySelector('#outResp03')
+
+        formu.addEventListener("submit", (e) => {
+            e.preventDefault() // Previne o comportamento padrão de submit
+
+            const modelo = formu.inModelo.value
+            const ano = Number(formu.inAno.value)
+            const preco = Number(formu.inPreco.value)
+
+            // Classifica o veículo e calcula valores financeiros
+            const classificacao = classificarVeiculo(ano)
+            // Calcula valor de entrada
+            const entrada = calculaEntrada(preco, classificacao)
+            // Calcula valor das parcelas (10x)
+            const parcela = (preco - entrada) / 10
+
+            resp01.innerText = `${modelo} - ${classificacao}`
+            resp02.innerText = `Entrada R$: ${entrada.toFixed(2)}`
+            resp03.innerText = `10x de R$: ${parcela.toFixed(2)}`
+        })
+
+        // Função para classificar o veículo com base no ano
+        function classificarVeiculo(ano) {
+            const anoAtual = new Date().getFullYear() // Obtém o ano atual
+            let classif // Variável para armazenar a classificação
+
+            // Determina a classificação com base na diferença de anos
+            if (ano == anoAtual) {
+                classif = "Novo"
+            } else if (ano == anoAtual - 1 || ano == anoAtual - 2) {
+                classif = "Seminovo"
+            } else {
+                classif = "Usado"
+            }
+            return classif // Retorna a classificação
+        }
+
+        // Função arrow para calcular o valor da entrada
+        // Se o veículo for novo, entrada é 50% do valor, senão 30%
+        const calculaEntrada = (valor, status) =>
+            status == "Novo" ? valor * 0.5 : valor * 0.3
+    </script>
+</body>
+
+</html>

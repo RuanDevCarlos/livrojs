@@ -26,28 +26,38 @@
     <p id="resposta02"></p>
     
     <script>
+        // Seleciona o formulário e os elementos de resposta
         const formu = document.querySelector('form')
         const resp01 = document.querySelector('#resposta01')
         const resp02 = document.querySelector('#resposta02')
 
+        // Adiciona um evento de clique ao botão de cálculo
         formu.btCalc.addEventListener("click", () => {
+            // Obtém os valores dos campos do formulário
             const inflacao = formu.inData.value
             let multa = Number(formu.inMulta.value)
 
+            // Calcula a data limite para pagamento com desconto (90 dias após a infração)
             const limite = new Date(inflacao)
             limite.setDate(limite.getDate() + 90)
+
+            // Obtém a data atual
             const hoje = new Date()
 
+            // Formata as datas para o padrão brasileiro (dd/mm/aaaa)
             const hojeBR = hoje.toLocaleString('pt-BR', {dateStyle: 'short'})
             const limiteBR = limite.toLocaleString('pt-BR', {dateStyle: 'short'})
 
+            // Verifica se a data atual é anterior à data limite
             if (hojeBR < limiteBR) {
                 multa = multa * 0.8
             }
 
+            // Limpa os resultados anteriores (se houver)
             resp01.textContent = ""
             resp02.textContent = ""
 
+            // Exibe os resultados na página
             resp01.textContent = `Data Limite para Pagamento com Desconto: ${limiteBR}`
             resp02.textContent = `Valor com desconto R$:${multa}`
         })

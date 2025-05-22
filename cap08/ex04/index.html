@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo 8.4</title>
+    <link rel="stylesheet" href="../estilo/style.css">
+    <link rel="shortcut icon" href="../imagens/livrojs.png" type="image/x-icon">
+</head>
+<body>
+    <img src="../imagens/ex8_4.jpg" alt="Pizzaria" class="normal">
+    <h1>Pizzaria Avenida - Controle de Pedidos</h1>
+    <form>
+        <div>
+            <!-- Grupo de seleção do tipo de produto -->
+            <label>Item do Pedido: </label>
+            <input type="radio" name="produto" id="rbPizza" checked autofocus>
+            <label for="rbPizza">Pizza</label>
+
+            <input type="radio" name="produto" id="rbBebida">
+            <label for="rbBebida">Bebida</label>
+
+            <!-- Seleção dos itens específicos -->
+            <span>Item: </span>
+            <select id="inPizza">
+                <option value="media">Pizza Média</option>
+                <option value="grande">Pizza Grande</option>
+                <option value="pequena">Pizza Familia</option>
+            </select>
+
+            <!-- Select de bebidas começa oculto -->
+            <select id="inBebida" class="oculta">
+                <option value="refri">Refrigerante</option>
+                <option value="suco">Jarra de Suco</option>
+                <option value="agua">Água Mineral</option>
+            </select>
+        </div>
+        <div>
+            <!-- Campo para detalhes do pedido -->
+            <label for="inDetalhes">Detalhes do Item: </label>
+            <input type="text" id="inDetalhes" class="detalhes">
+            <input type="submit" value="Adicionar">
+        </div>
+    </form>
+
+    <!-- Área para exibir os pedidos -->
+    <pre></pre>
+
+    <script>
+        // Referências aos elementos principais
+        const formu = document.querySelector("form")
+        const resp = document.querySelector("pre")
+
+        // Array para armazenar os itens do pedido
+        const itens = []
+
+        // Evento para quando Pizza é selecionada
+        formu.rbPizza.addEventListener("click", () => {
+            formu.inBebida.className = "oculta" // Esconde bebidas
+            formu.inPizza.className = "exibe" // Mostra pizzas
+        })
+
+        // Evento para quando Bebida é selecionada
+        formu.rbBebida.addEventListener("click", () => {
+            formu.inPizza.className = "oculta"
+            formu.inBebida.className = "exibe"
+        })
+
+        // Quando o campo de detalhes recebe foco
+        formu.inDetalhes.addEventListener("focus", () => {
+            // Se for pizza, mostra placeholder com quantidade de sabores
+            if (formu.rbPizza.checked) {
+                const pizza = formu.inPizza.value
+                // Determina número máximo de sabores baseado no tamanho
+                const num = pizza == "media" ? 2 : pizza == "grande" ? 3 : 4
+                formu.inDetalhes.placeholder = `Até ${num} sabores`
+            }
+        })
+
+        // Quando o campo de detalhes perde foco
+        formu.inDetalhes.addEventListener("blur", () => {
+            formu.inDetalhes.placeholder = ""
+        })
+
+        // Quando o formulário é submetido
+        formu.addEventListener("submit", (e) => {
+            e.preventDefault()
+
+            let produto
+
+            // Obtém o produto selecionado (pizza ou bebida)
+            if (formu.rbPizza.checked) {
+                const num = formu.inPizza.selectedIndex
+                produto = formu.inPizza.options[num].text
+            } else {
+                const num = formu.inBebida.selectedIndex
+                produto = formu.inBebida.options[num].text
+            }
+
+            // Obtém os detalhes do item
+            const detalhes = formu.inDetalhes.value
+
+            // Adiciona o item ao array de pedidos
+            itens.push(`${produto}(${detalhes})`)
+
+            // Atualiza a exibição dos pedidos
+            resp.innerText = itens.join("\n")
+
+            // Limpa o formulário e reativa a opção Pizza
+            formu.reset()
+            formu.rbPizza.dispatchEvent(new Event("click"))
+        })
+    </script>
+</body>
+</html>

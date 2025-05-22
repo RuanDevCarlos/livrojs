@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resposta B</title>
+    <link rel="shortcut icon" href="../imagens/livrojs.png" type="image/x-icon">
+    <style>
+        img {
+            float: left;
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <img src="../imagens/exerc.jpg" alt="Exemplo">
+    <h1>Programa Senha Inicial</h1>
+    <hr>
+    <form>
+        <div>
+            <label for="inAluno">Nome do Aluno: </label>
+            <input type="text" id="inAluno" required>
+            <input type="submit" value="Gerar Senha">
+        </div>
+    </form>
+    <span></span>
+
+    <script>
+        const formu = document.querySelector("form")
+        const resp = document.querySelector("span")
+        let sobrenome = ""
+        let numVogais = 0
+        
+        formu.addEventListener("submit", (e) => {
+            e.preventDefault()
+            
+            
+            if (validarNome()) {
+                obterSobrenome()
+                contarVogais()
+            } else {
+                resp.textContent = "Coloque seu nome completo"
+            }
+            
+            resp.textContent = `Senha Inicial: ${sobrenome}${String(numVogais).padStart(2)}`
+        })
+        
+        function validarNome() {
+            const aluno = formu.inAluno.value
+            if (aluno.includes(" ")) {
+                return true
+            }
+            return false
+        }
+        
+        function obterSobrenome() {
+            const aluno = formu.inAluno.value
+            const partes = aluno.split(" ")
+            sobrenome = partes[partes.length - 1]
+        }
+        
+        function contarVogais() {
+            const aluno = formu.inAluno.value
+            const vogais = ["a", "e", "i", "o", "u"]
+
+            for (let i = 0; i < aluno.length; i++) {
+                if (aluno.charAt(i) == vogais[i]) {
+                    numVogais++
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<script>
+    // Define uma função chamada 'situacao' que recebe dois parâmetros:
+    // 'nota' - a nota do aluno (obrigatório)
+    // 'media' - a média para aprovação (opcional, padrão é 7 se não for informado)
+    function situacao(nota, media = 7) {
+        if (nota >= media) {
+            alert("Aprovado!")
+        } else {
+            alert("Reprovado")
+        }
+    }
+
+    // Solicita ao usuário que digite uma nota através de um prompt
+    // Converte o valor digitado para Number (tipo numérico)
+    const prova01 = Number(prompt("Nota: "))
+
+    // Chama a função 'situacao' passando:
+    // - a nota digitada pelo usuário (prova01)
+    // - o valor 7 como média (que poderia ser omitido pois é o valor padrão)
+    situacao(prova01, 7)
+</script>

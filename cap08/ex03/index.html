@@ -1,0 +1,32 @@
+<script>
+    function calcularMedia(...notas) {
+        // Obtém o número de notas passadas como parâmetro
+        const num = notas.length
+
+        // Verifica se não foi informada nenhuma nota
+        if (num == 0) {
+            console.log("Iforme, no mínimo, uma nota")
+            return // Encerra a função se não houver notas
+        }
+
+        // Variável para acumular a soma das notas
+        let soma = 0
+
+        // Loop para percorrer todas as notas e somá-las
+        for (const nota of notas) {
+            soma += nota
+        }
+
+        // Calcula a média dividindo a soma pelo número de notas
+        const media = soma / num
+
+        // Exibe a média formatada com 1 casa decimal
+        console.log(`Média: ${media.toFixed(1)}`)
+    }
+
+    // Chamadas da função com diferentes conjuntos de notas
+    calcularMedia(6, 7, 8)
+    calcularMedia(2, 10)
+    calcularMedia(7.5, 10, 8, 9.5)
+    calcularMedia() // Chama sem notas (mostrará mensagem de erro)
+</script>
