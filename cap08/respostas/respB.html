@@ -29,45 +29,52 @@
         const formu = document.querySelector("form")
         const resp = document.querySelector("span")
         let sobrenome = ""
-        let numVogais = 0
         
+        // Adiciona um listener para o evento de submit do formulário
         formu.addEventListener("submit", (e) => {
-            e.preventDefault()
+            e.preventDefault() // Previne o comportamento padrão de recarregar a página
             
-            
+            // Verifica se o nome é válido (contém espaço)
             if (validarNome()) {
-                obterSobrenome()
-                contarVogais()
+                obterSobrenome() // Se válido, obtém o sobrenome
             } else {
-                resp.textContent = "Coloque seu nome completo"
+                resp.textContent = "Coloque seu nome completo" // Mensagem de erro
             }
             
-            resp.textContent = `Senha Inicial: ${sobrenome}${String(numVogais).padStart(2)}`
+            // Exibe a senha formatada: sobrenome + número de vogais (com 2 dígitos)
+            resp.textContent = `Senha Inicial: ${sobrenome}${String(contarVogais()).padStart(2, "0")}`
         })
         
+        // Função para validar se o nome contém espaço (nome completo)
         function validarNome() {
             const aluno = formu.inAluno.value
             if (aluno.includes(" ")) {
-                return true
+                return true // Retorna true se for nome completo
             }
-            return false
+            return false // Retorna false se for apenas um nome
         }
         
+        // Função para extrair o sobrenome do nome completo
         function obterSobrenome() {
             const aluno = formu.inAluno.value
-            const partes = aluno.split(" ")
-            sobrenome = partes[partes.length - 1]
+            const partes = aluno.split(" ") // Divide o nome em partes
+            sobrenome = partes[partes.length - 1] // Pega a última parte (sobrenome)
         }
         
+        // Pega a última parte (sobrenome)
         function contarVogais() {
             const aluno = formu.inAluno.value
             const vogais = ["a", "e", "i", "o", "u"]
+            let numVogais = 0 // Inicializa o contador
 
+            // Percorre cada caractere do nome
             for (let i = 0; i < aluno.length; i++) {
-                if (aluno.charAt(i) == vogais[i]) {
-                    numVogais++
+                // Verifica se o caractere atual é uma vogal (minúscula)
+                if (vogais.includes(aluno[i])) {
+                    numVogais++ // Incrementa o contador se for vogal
                 }
             }
+            return numVogais // Retorna o total de vogais
         }
     </script>
 </body>
